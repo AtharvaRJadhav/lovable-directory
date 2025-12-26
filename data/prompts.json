@@ -1,0 +1,78 @@
+[
+  {
+    "id": "sponsor-1",
+    "title": "Supabase",
+    "description": "Backend platform",
+    "promptText": "The open source Firebase alternative. Build impossible things with the world's best tools. Database, Auth, Edge Functions, and Realtime.",
+    "category": "Database",
+    "createdAt": "2024-01-14T00:00:00Z",
+    "featured": true,
+    "sponsorUrl": "https://supabase.com"
+  },
+  {
+    "id": "saas-landing-page",
+    "title": "SaaS Landing Page",
+    "description": "A modern landing page for SaaS products with hero, features, pricing, and CTA sections",
+    "promptText": "Build a modern SaaS landing page with a hero section featuring a compelling headline and subheadline, a features section showcasing 3-4 key benefits with icons, a pricing section with 3 tiers (Starter, Pro, Enterprise), customer testimonials, and a strong call-to-action. Use a clean, professional design with a gradient background and smooth animations.",
+    "category": "SaaS",
+    "createdAt": "2024-01-15T00:00:00Z"
+  },
+  {
+    "id": "ecommerce-product-page",
+    "title": "E-commerce Product Page",
+    "description": "A complete product page with image gallery, variants, reviews, and add-to-cart functionality",
+    "promptText": "Create an e-commerce product page with a responsive image gallery (main image + thumbnails), product title and description, price display, variant selector (size, color), quantity selector, add to cart button, product reviews section with ratings, related products carousel, and breadcrumb navigation. Include a sticky add-to-cart bar on mobile.",
+    "category": "E-commerce",
+    "createdAt": "2024-01-16T00:00:00Z"
+  },
+  {
+    "id": "dashboard-analytics",
+    "title": "Analytics Dashboard",
+    "description": "A data visualization dashboard with charts, metrics, and filters",
+    "promptText": "Build an analytics dashboard with a header showing key metrics (total users, revenue, growth rate), a date range picker, multiple chart types (line chart for trends, bar chart for comparisons, pie chart for distribution), a data table with sorting and pagination, and filter options by category or date. Use a dark theme with colorful data visualizations.",
+    "category": "Dashboard",
+    "createdAt": "2024-01-17T00:00:00Z"
+  },
+  {
+    "id": "blog-platform",
+    "title": "Blog Platform",
+    "description": "A content management system for blogs with rich text editor and categories",
+    "promptText": "Create a blog platform with a homepage showing featured posts and recent articles, individual post pages with markdown rendering, a category filter, author profiles, search functionality, and an admin panel for creating/editing posts with a rich text editor. Include social sharing buttons and a newsletter signup form.",
+    "category": "Content",
+    "createdAt": "2024-01-18T00:00:00Z"
+  },
+  {
+    "id": "task-manager",
+    "title": "Task Manager App",
+    "description": "A Kanban-style task management tool with drag-and-drop and filters",
+    "promptText": "Build a task manager with a Kanban board layout (To Do, In Progress, Done columns), drag-and-drop functionality to move tasks between columns, task creation modal with title, description, due date, and priority, task filtering by status or assignee, search functionality, and a sidebar showing task statistics. Use a clean, minimalist design.",
+    "category": "Productivity",
+    "createdAt": "2024-01-19T00:00:00Z"
+  },
+  {
+    "id": "social-feed",
+    "title": "Social Media Feed",
+    "description": "An Instagram-style feed with posts, likes, comments, and user profiles",
+    "promptText": "Create a social media feed with an infinite scroll of posts (images with captions), like and comment functionality, user profiles with avatar and bio, post creation modal with image upload, hashtag support, and a stories feature at the top. Include smooth animations for interactions and a responsive grid layout.",
+    "category": "Social",
+    "createdAt": "2024-01-20T00:00:00Z"
+  },
+  {
+    "id": "booking-system",
+    "title": "Booking System",
+    "description": "A calendar-based booking system with time slots and availability",
+    "promptText": "Build a booking system with a calendar view showing available time slots, date navigation, time slot selection, booking form with name, email, and phone, confirmation page, email notifications, and an admin view to manage bookings. Include visual indicators for booked vs available slots.",
+    "category": "Booking",
+    "createdAt": "2024-01-21T00:00:00Z"
+  },
+  {
+    "id": "portfolio-website",
+    "title": "Portfolio Website",
+    "description": "A personal portfolio site with projects, skills, and contact form",
+    "promptText": "Create a portfolio website with a hero section introducing the person, a projects section with image galleries and descriptions, a skills section with icons, an about section, a contact form with validation, and smooth scroll navigation. Use a modern, creative design with animations on scroll.",
+    "category": "Portfolio",
+    "createdAt": "2024-01-22T00:00:00Z"
+  }
+]
+
+
