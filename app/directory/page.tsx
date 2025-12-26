@@ -54,7 +54,7 @@ export default function DirectoryPage() {
         </div>
 
         <a 
-          href="https://x.com/yourusername" 
+          href="https://x.com/ThinkAtharva" 
           target="_blank" 
           rel="noopener noreferrer"
           className="text-xs font-medium text-zinc-500 hover:text-white transition-colors"

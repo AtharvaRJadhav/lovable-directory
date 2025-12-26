@@ -2,13 +2,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { BentoCard } from "@/components/BentoCard";
 import { HeroGlow } from "@/components/HeroGlow";
+import { Logo } from "@/components/Logo";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#020202] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] text-white font-sans selection:bg-white/20 relative flex flex-col items-center justify-center p-8">
-      <HeroGlow />
+    <div className="min-h-screen bg-[#020202] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] text-white font-sans selection:bg-white/20">
       
-      <div className="relative z-10">
+      {/* Top Navigation */}
+      <header className="flex items-center justify-between h-14 px-6 border-b border-white/5 bg-[#030303]/50 backdrop-blur-xl sticky top-0 z-20">
+        
+        {/* Logo Area */}
+        <div className="flex items-center">
+          <Logo />
+        </div>
+
+        {/* FIXED: Links to @ThinkAtharva */}
+        <a 
+          href="https://x.com/ThinkAtharva" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-xs font-medium text-zinc-500 hover:text-white transition-colors"
+        >
+          Follow for updates
+        </a>
+
+      </header>
+
+      <div className="relative flex flex-col items-center justify-center p-8 min-h-[calc(100vh-3.5rem)]">
+        <HeroGlow />
+        
+        <div className="relative z-10">
         {/* 1. Header Section */}
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-6">
         {/* Powered by badge */}
@@ -58,6 +81,7 @@ export default function LandingPage() {
             icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
           />
         </div>
+      </div>
       </div>
     </div>
   );

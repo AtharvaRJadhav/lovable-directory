@@ -4,11 +4,11 @@ import { Plus } from "lucide-react";
 
 export function SubmitButton() {
   const handleSubmit = () => {
-    // 1. Your Specific Repo Details (I added them here)
+    // Your verified GitHub details
     const GITHUB_USERNAME = "AtharvaRJadhav";
     const REPO_NAME = "lovable-directory";
     
-    // 2. The Form Content (This pre-fills the issue for the user)
+    // The content
     const title = "New Prompt Submission";
     const body = `
 ### Prompt Title
@@ -26,20 +26,19 @@ export function SubmitButton() {
 (e.g. Dashboard, Landing Page, Auth)
 `;
 
-    // 3. Generate the Magic Link
     const url = `https://github.com/${GITHUB_USERNAME}/${REPO_NAME}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
-    
-    // 4. Open GitHub in a new tab
     window.open(url, "_blank");
   };
 
   return (
     <button
       onClick={handleSubmit}
-      className="w-full flex items-center justify-center gap-2 bg-white text-black font-medium py-2.5 rounded-lg hover:bg-zinc-200 transition-colors shadow-lg shadow-white/5"
+      className="group w-full flex items-center justify-center gap-2 bg-[#0A0A0A] border border-white/10 text-zinc-400 font-medium py-2.5 rounded-lg hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-300"
     >
-      <Plus className="w-4 h-4" />
-      Submit Prompt
+      <div className="p-0.5 rounded bg-zinc-800 group-hover:bg-zinc-700 transition-colors">
+        <Plus className="w-3.5 h-3.5" />
+      </div>
+      <span className="text-sm">Submit Prompt</span>
     </button>
   );
 }
