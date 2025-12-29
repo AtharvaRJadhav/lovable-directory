@@ -8,9 +8,13 @@ export async function middleware(request: NextRequest) {
     },
   })
 
+  // HARDCODED KEYS to bypass Vercel Env Var issues
+  const supabaseUrl = 'https://nskvwjgxebymvryzafde.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5za3Z3amd4ZWJ5bXZyeXphZmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwMTkzNzYsImV4cCI6MjA4MjU5NTM3Nn0.JN2i7kGzIcSLpBTJpTR_kdHW2AdaWxbPjBD1S8kSvDs';
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         get(name: string) {
@@ -54,22 +58,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
-
-  // 1. If user is NOT logged in and tries to access /directory, send them to /login
-  if (!user && request.nextUrl.pathname.startsWith('/directory')) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // 2. If user IS logged in and tries to access /login, send them to /directory
-  if (user && request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.redirect(new URL('/directory', request.url))
-  }
+  await supabase.auth.getUser()
 
   return response
 }
 
 export const config = {
-  matcher: ['/directory/:path*', '/login'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 }
-

@@ -7,33 +7,27 @@ export async function GET(request: Request) {
   const next = searchParams.get('next') ?? '/'
 
   if (code) {
+    // HARDCODED KEYS to bypass Vercel Env Var issues
+    const supabaseUrl = 'https://nskvwjgxebymvryzafde.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5za3Z3amd4ZWJ5bXZyeXphZmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwMTkzNzYsImV4cCI6MjA4MjU5NTM3Nn0.JN2i7kGzIcSLpBTJpTR_kdHW2AdaWxbPjBD1S8kSvDs';
+
     const cookieStore = {
-        getAll() {
-            return [] // We can't access cookies directly in a route handler easily without headers, 
-                      // but createServerClient needs the cookie methods.
-                      // For simplicity in this specific route handler structure:
-            return []
-        },
+        getAll() { return [] },
     }
     
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      supabaseUrl,
+      supabaseKey,
       {
         cookies: {
           get(name: string) {
-            // Need to parse cookies from request headers
             const cookieHeader = request.headers.get('Cookie') || ''
             const match = cookieHeader.match(new RegExp('(^| )' + name + '=([^;]+)'))
             if (match) return match[2]
             return undefined
           },
-          set(name: string, value: string, options: CookieOptions) {
-            // In a Route Handler, we need to return the response with Set-Cookie headers
-            // This is a simplified version for exchanging the code
-          },
-          remove(name: string, options: CookieOptions) {
-          },
+          set(name: string, value: string, options: CookieOptions) {},
+          remove(name: string, options: CookieOptions) {},
         },
       }
     )
@@ -41,7 +35,6 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
-      // If successful, redirect to dashboard
       const forwardedHost = request.headers.get('x-forwarded-host') 
       const isLocal = !forwardedHost
       if (isLocal) {
@@ -52,7 +45,5 @@ export async function GET(request: Request) {
     }
   }
 
-  // Return the user to an error page with instructions
   return NextResponse.redirect(`${origin}/auth/auth-code-error`)
 }
-

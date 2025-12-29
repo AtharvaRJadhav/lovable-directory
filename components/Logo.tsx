@@ -9,6 +9,7 @@ export function Logo() {
           src="/logo-icon.png" 
           alt="Lovable" 
           fill 
+          sizes="32px"
           className="object-contain"
           priority
         />
