@@ -1,13 +1,9 @@
 import { createBrowserClient } from '@supabase/ssr'
 
 export function createClient() {
-  // Check if env vars are missing to help debug
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.error('Supabase URL or Key is missing in environment variables!')
-  }
+  // We are hardcoding these to ensure Vercel sees them
+  const supabaseUrl = 'https://nskvwjgxebybvryzafde.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5za3Z3amd4ZWJ5bXZyeXphZmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwMTkzNzYsImV4cCI6MjA4MjU5NTM3Nn0.JN2i7kGzIcSLpBTJpTR_kdHW2AdaWxbPjBD1S8kSvDs';
 
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  return createBrowserClient(supabaseUrl, supabaseKey);
 }
