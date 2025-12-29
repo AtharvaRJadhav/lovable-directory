@@ -3,114 +3,139 @@
 import { useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Logo } from '@/components/Logo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [message, setMessage] = useState<string | null>(null);
+  
   const router = useRouter();
   const supabase = createClient();
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
-    setMessage('');
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    });
+    setError(null);
+    setMessage(null);
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      router.push('/directory'); // Send to App
-      router.refresh();
+    try {
+      if (mode === 'signup') {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${location.origin}/auth/callback`,
+          },
+        });
+        if (error) throw error;
+        setMessage('Check your email to confirm your account!');
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        router.push('/');
+        router.refresh();
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  };
-
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage('');
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setMessage(error.message);
-    } else {
-      router.push('/directory'); // Send to App
-      router.refresh();
-    }
-    setIsLoading(false);
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[#030303] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-zinc-900/50 border border-white/10 rounded-xl p-8 backdrop-blur-xl">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-zinc-400 text-sm">Sign in to access unlimited prompts</p>
+    <div className='min-h-screen bg-[#030303] text-white flex flex-col items-center justify-center p-4'>
+      <div className='w-full max-w-md'>
+        {/* Logo */}
+        <div className='flex justify-center mb-8'>
+          <Link href='/'>
+            <Logo />
+          </Link>
         </div>
 
-        <form className="space-y-4">
-          <div>
-            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-white/20 transition-colors"
-              placeholder="you@example.com"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-white/20 transition-colors"
-              placeholder="••••••••"
-            />
-          </div>
+        {/* Card */}
+        <div className='bg-zinc-900/50 border border-white/5 rounded-2xl p-8 backdrop-blur-xl'>
+          <h2 className='text-xl font-bold mb-6 text-center'>
+            {mode === 'signin' ? 'Welcome back' : 'Create an account'}
+          </h2>
 
+          {/* Error Message */}
+          {error && (
+            <div className='mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-2 text-red-400 text-sm'>
+              <AlertCircle className='w-4 h-4 flex-shrink-0' />
+              {error}
+            </div>
+          )}
+
+          {/* Success Message */}
           {message && (
-            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+            <div className='mb-6 p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm text-center'>
               {message}
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
-            <button
-              onClick={handleSignIn}
-              disabled={isLoading}
-              className="flex-1 bg-white text-black font-medium py-2.5 rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50 text-sm"
-            >
-              {isLoading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Sign In'}
-            </button>
+          <form onSubmit={handleSubmit} className='space-y-4'>
+            <div>
+              <label className='block text-xs font-medium text-zinc-400 mb-1.5'>Email</label>
+              <input
+                type='email'
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className='w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500/50 transition-colors text-white placeholder:text-zinc-600'
+                placeholder='name@example.com'
+              />
+            </div>
             
+            <div>
+              <label className='block text-xs font-medium text-zinc-400 mb-1.5'>Password</label>
+              <input
+                type='password'
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className='w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500/50 transition-colors text-white'
+                placeholder='••••••••'
+              />
+            </div>
+
             <button
-              onClick={handleSignUp}
+              type='submit'
               disabled={isLoading}
-              className="flex-1 bg-zinc-800 text-white font-medium py-2.5 rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-50 text-sm"
+              className='w-full py-2.5 bg-white text-black font-bold rounded-lg hover:bg-zinc-200 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed mt-2'
             >
-              Sign Up
+              {isLoading ? (
+                <Loader2 className='w-4 h-4 animate-spin' />
+              ) : (
+                mode === 'signin' ? 'Sign In' : 'Sign Up'
+              )}
+            </button>
+          </form>
+
+          <div className='mt-6 pt-6 border-t border-white/5 text-center'>
+            <button
+              onClick={() => {
+                setMode(mode === 'signin' ? 'signup' : 'signin');
+                setError(null);
+                setMessage(null);
+              }}
+              className='text-sm text-zinc-500 hover:text-white transition-colors'
+            >
+              {mode === 'signin' 
+                ? "Don't have an account? Sign up" 
+                : "Already have an account? Sign in"}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 }
-
