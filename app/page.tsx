@@ -40,6 +40,15 @@ export default function LandingPage() {
     router.refresh();
   };
 
+  const handleDirectoryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      router.push('/directory');
+    } else {
+      router.push('/login?next=/directory');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020202] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] text-white font-sans selection:bg-white/20">
       
@@ -103,18 +112,20 @@ export default function LandingPage() {
         
         {/* THE BUTTONS: No Blue! */}
         <div className="flex items-center justify-center gap-4 pt-4">
-          <Link
+          <a
             href="/directory"
+            onClick={handleDirectoryClick}
             className="bg-white text-black px-6 py-2.5 rounded-full font-medium text-sm hover:bg-zinc-200 transition-colors"
           >
             Browse Directory
-          </Link>
-          <Link
+          </a>
+          <a
             href="/directory"
+            onClick={handleDirectoryClick}
             className="bg-transparent border border-white/10 text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-white/5 transition-colors"
           >
             View Free Prompts
-          </Link>
+          </a>
         </div>
         </div>
 

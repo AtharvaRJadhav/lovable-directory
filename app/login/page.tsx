@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
@@ -16,7 +16,11 @@ export default function LoginPage() {
   const [message, setMessage] = useState<string | null>(null);
   
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
+  
+  // Get the redirect URL from query params, default to /directory
+  const nextUrl = searchParams.get('next') || '/directory';
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,7 +34,7 @@ export default function LoginPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${location.origin}/auth/callback`,
+            emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
           },
         });
         if (error) throw error;
@@ -41,7 +45,7 @@ export default function LoginPage() {
           password,
         });
         if (error) throw error;
-        router.push('/');
+        router.push(nextUrl);
         router.refresh();
       }
     } catch (err: any) {
