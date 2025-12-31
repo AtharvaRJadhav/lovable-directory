@@ -20,16 +20,7 @@ A paid directory of ready-to-use prompts and mini app templates for Lovable user
 
 ### Installation
 
-1. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-2. Set up environment variables:
+1. Set up environment variables:
 Create a `.env.local` file in the root directory:
 ```
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
@@ -37,16 +28,7 @@ STRIPE_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-3. Run the development server:
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+2. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Stripe Setup
 
