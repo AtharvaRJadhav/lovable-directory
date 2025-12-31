@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -141,5 +141,28 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className='min-h-screen bg-[#030303] text-white flex flex-col items-center justify-center p-4'>
+        <div className='w-full max-w-md'>
+          <div className='flex justify-center mb-8'>
+            <Link href='/'>
+              <Logo />
+            </Link>
+          </div>
+          <div className='bg-zinc-900/50 border border-white/5 rounded-2xl p-8 backdrop-blur-xl'>
+            <div className='flex items-center justify-center'>
+              <Loader2 className='w-6 h-6 animate-spin text-white' />
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
